@@ -3,17 +3,17 @@ const searchQuery = ref("star")
 const resultQuery = ref(null)
 const arrayData = ref(null)
 const loader = ref(false)
-const searchData = async() => {
+const searchData = async () => {
     loader.value = true
-    await useFetch('https://images-api.nasa.gov/search?q=' + searchQuery.value).then((response) => {
-        if(response.data) {
+    await useFetch('articles').then((response) => {
+        if (response.data) {
             setTimeout(() => {
-                resultQuery.value = response.data.value.collection.items
+                console.log(response.data.value)
+                resultQuery.value = response.data.value
                 loader.value = false
-                console.log(response.data.value.collection)
-            }, 10000)
+            }, 1000)
         }
-    }) 
+    })
 }
 
 onBeforeMount(async () => {
@@ -39,10 +39,12 @@ watch(resultQuery, (newValue, oldValue) => {
 
         <div class="result" v-else>
             <div v-for="(value, index) in arrayData" :key=index>
-                {{  value.links }}
+                {{ value }}
+                
+
+            </div>
         </div>
-        </div>
-        
+
     </div>
 </template>
 <style scoped lang="scss">
